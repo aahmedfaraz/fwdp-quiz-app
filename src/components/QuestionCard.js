@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, { useState, useContext, useEffect} from 'react';
+
+// Import MUI
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -6,6 +8,9 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+
+// Import Context
+import globalContext from '../context/global/globalContext';
 
 const bull = (
   <Box
@@ -17,15 +22,32 @@ const bull = (
 );
 
 export default function QuestionCard() {
+  const { allQuestions, currentQuestion, incrementScore } = useContext(globalContext);
+  const {category,correctAnswer,options,question} = allQuestions[currentQuestion];
+
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  useEffect(() => {
+    setSelectedAnswer(null)
+  }, [currentQuestion])
+
+  const checkAnswer = (givenAnswer) => {
+    if(!selectedAnswer) {
+      if(givenAnswer === correctAnswer) {
+        incrementScore();
+      }      
+      setSelectedAnswer(givenAnswer);
+    }
+  }
+
   return (
     <Card sx={{ minWidth: 275, width: '100%' }}>
       <CardContent>
-        <Chip label="General Knowledge" color="primary" />
+        <Chip label={category} color="primary" />
         <Typography sx={{ fontSize: 14, marginTop: '10px' }} color="text.secondary" gutterBottom>
-          Question
+          {currentQuestion + 1}. Question
         </Typography>
         <Typography variant="h5" component="div">
-          {bull} This is dummy question?
+          {bull} {question}
         </Typography>
       <ButtonGroup
         orientation="vertical"
@@ -33,12 +55,7 @@ export default function QuestionCard() {
         fullWidth
       >
         {
-          [
-            <Button color='success' key="one">One</Button>,
-            <Button key="two">Two</Button>,
-            <Button color='error' key="three">Three</Button>,
-            <Button key="four">Four</Button>,
-          ]
+          options.map(opt => <Button color={`${opt === correctAnswer && selectedAnswer !== null ? 'success' : selectedAnswer === opt ? 'error' : 'primary'}`} key={opt} onClick={() => checkAnswer(opt)}>{opt}</Button>)
         }
       </ButtonGroup>
       </CardContent>

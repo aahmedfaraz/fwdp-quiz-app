@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext} from 'react'
 import './App.css';
 
 // Import MUI Elements
@@ -15,10 +15,11 @@ import Navigation from './components/Navigation';
 import Spinner from './components/common/Spinner';
 import Alert from './components/common/Alert';
 
-const App = () => {
-  const [quizStarted, setQuizStarted] = useState(false);
+// Import Context
+import globalContext from './context/global/globalContext';
 
-  const start = () => setQuizStarted(true);
+const App = () => {
+  const { startQuiz, allQuestions, loading } = useContext(globalContext);
   
   return (
     <>
@@ -27,8 +28,8 @@ const App = () => {
       <Container maxWidth="sm">
         <Box sx={{ bgcolor: '#f7f7f7', height: 'auto', padding: '10px', marginTop: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
           {
-            !quizStarted ? (
-              <Button color='secondary' variant="contained" onClick={start}>Start Quiz</Button>
+            allQuestions.length == 0 ? (
+              <Button color='secondary' variant="contained" onClick={startQuiz}>Start Quiz</Button>
             ) : (
               <>
               <ScoreBoard />
@@ -37,8 +38,10 @@ const App = () => {
               </>
             )
           }
-          {/* <Alert />
-          <Spinner /> */}
+          <Alert />
+          {
+            loading && <Spinner />
+          }
         </Box>
       </Container>
     </>

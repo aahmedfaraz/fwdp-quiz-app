@@ -1,11 +1,19 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Alert from '@mui/material/Alert';
+// Import Context
+import globalContext from '../../context/global/globalContext';
 
 const AlertComponent = () => {
+  const { error } = useContext(globalContext);
   return (
-    <Alert variant="filled" sx={{ width: '100%' }} severity="error">
-      This is an error alert — check it out!
-    </Alert>
+    <>
+    {
+      error &&
+      <Alert variant="filled" sx={{ width: '100%' }} severity="error">
+        {error}
+      </Alert>
+    }
+    </>
   )
 }
 
