@@ -28,7 +28,7 @@ const App = () => {
       <Container maxWidth="sm">
         <Box sx={{ bgcolor: '#f7f7f7', height: 'auto', padding: '10px', marginTop: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
           {
-            allQuestions.length == 0 ? (
+            allQuestions.length === 0 ? (
               <Button color='secondary' variant="contained" onClick={startQuiz}>Start Quiz</Button>
             ) : (
               <>

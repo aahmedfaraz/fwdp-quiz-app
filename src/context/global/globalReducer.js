@@ -31,7 +31,7 @@ const globalReducer = (state, action) => {
                 score: state.score + 1,
             }
         case MOVE_TO_NEXT_QUESTION: 
-            if (state.currentQuestion == 9) {
+            if (state.currentQuestion === 9) {
                 // End Quiz
                 return {
                     ...state,
