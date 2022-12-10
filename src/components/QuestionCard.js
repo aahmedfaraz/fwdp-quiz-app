@@ -44,7 +44,7 @@ export default function QuestionCard() {
       <CardContent>
         <Chip label={category} color="primary" />
         <Typography sx={{ fontSize: 14, marginTop: '10px' }} color="text.secondary" gutterBottom>
-          {currentQuestion + 1}. Question
+          {currentQuestion + 1}/10. Question
         </Typography>
         <Typography variant="h5" component="div">
           {bull} {question}
